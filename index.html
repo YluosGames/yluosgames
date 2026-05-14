@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -33,18 +33,15 @@
       --r-xl: 1rem; --r-2xl: 1.5rem; --r-full: 9999px;
     }
 
-    /* BASE */
     body { min-height: 100dvh; font-family: var(--font-body); font-size: clamp(1rem,.95rem + .25vw,1.125rem); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; }
     img { display: block; max-width: 100%; height: auto; }
     a { color: inherit; text-decoration: none; }
     :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: var(--r-sm); }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
-    /* SKIP LINK */
     .skip-link { position:absolute; top:-100px; left:1rem; padding:.5rem 1rem; background:var(--gold); color:#000; border-radius:var(--r-md); font-weight:700; z-index:9999; transition:top .2s; }
     .skip-link:focus { top:1rem; }
 
-    /* HEADER */
     .header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 68px;
       display: flex; align-items: center; justify-content: space-between;
@@ -53,12 +50,7 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(201,162,39,.1);
     }
-    .header-brand {
-      display: flex; align-items: center; gap: .75rem;
-      font-family: var(--font-display); font-size: 1.05rem; font-weight: 600;
-      color: var(--gold); letter-spacing: .06em;
-      transition: color 180ms var(--ease);
-    }
+    .header-brand { display: flex; align-items: center; gap: .75rem; font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--gold); letter-spacing: .06em; transition: color 180ms var(--ease); }
     .header-brand:hover { color: var(--gold-bright); }
     .header-brand img { width:38px; height:38px; border-radius:var(--r-full); border:1.5px solid rgba(201,162,39,.4); object-fit:cover; }
     .header-nav { display:flex; gap:2rem; align-items:center; }
@@ -68,21 +60,8 @@
     .nav-cta:hover { background:rgba(201,162,39,.1); border-color:var(--gold) !important; }
     @media (max-width:640px) { .header-nav .hide-mobile { display:none; } }
 
-    /* HERO */
-    .hero {
-      position: relative; min-height: 100dvh;
-      display: flex; align-items: center; justify-content: center;
-      padding: clamp(6rem,12vw,10rem) clamp(1rem,5vw,3rem) clamp(4rem,8vw,6rem);
-      overflow: hidden; text-align: center;
-    }
-    .hero-bg {
-      position:absolute; inset:0;
-      background-image: url('BackgroundYluosGames.PNG');
-      background-size: cover; background-position: center;
-      filter: brightness(.35) saturate(.7);
-      transform: scale(1.04);
-      transition: transform 12s ease;
-    }
+    .hero { position: relative; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: clamp(6rem,12vw,10rem) clamp(1rem,5vw,3rem) clamp(4rem,8vw,6rem); overflow: hidden; text-align: center; }
+    .hero-bg { position:absolute; inset:0; background-image: url('BackgroundYluosGames.PNG'); background-size: cover; background-position: center; filter: brightness(.35) saturate(.7); transform: scale(1.04); transition: transform 12s ease; }
     .hero:hover .hero-bg { transform: scale(1.0); }
     .hero-overlay { position:absolute; inset:0; background: radial-gradient(ellipse at center, transparent 30%, rgba(7,9,13,.85) 100%); }
     .hero-vignette { position:absolute; inset:0; background: radial-gradient(ellipse at center, transparent 40%, rgba(7,9,13,.6) 100%); }
@@ -101,30 +80,18 @@
     .scroll-hint { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.4rem; color:var(--text-faint); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; animation: bounceY 2s ease-in-out infinite; }
     @keyframes bounceY { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
 
-    /* DIVIDER */
     .divider { height:1px; background:linear-gradient(to right, transparent, rgba(201,162,39,.15), transparent); margin:0; }
 
-    /* SECTIONS */
     .section { padding: clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem); }
     .section-inner { max-width:1160px; margin:0 auto; }
     .section-heading { font-family:var(--font-display); font-size:clamp(1.6rem,1.2rem+1.5vw,2.6rem); font-weight:700; color:var(--text); letter-spacing:.04em; margin-bottom:2.5rem; line-height:1.2; }
 
-    /* REVEAL ANIMATION */
     .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s var(--ease), transform .65s var(--ease); }
     .reveal.visible { opacity:1; transform:none; }
     .d1 { transition-delay:.1s; } .d2 { transition-delay:.2s; } .d3 { transition-delay:.3s; } .d4 { transition-delay:.4s; }
 
-    /* GAME CARDS */
     .games-grid { display:flex; flex-direction:column; gap:3rem; }
-    .game-card {
-      display:grid; grid-template-columns:1fr 1fr;
-      border-radius:var(--r-2xl); overflow:hidden;
-      border:1px solid var(--border);
-      background:var(--surface);
-      text-decoration:none; color:inherit;
-      transition:transform 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease);
-      box-shadow:0 8px 40px rgba(0,0,0,.5);
-    }
+    .game-card { display:grid; grid-template-columns:1fr 1fr; border-radius:var(--r-2xl); overflow:hidden; border:1px solid var(--border); background:var(--surface); text-decoration:none; color:inherit; transition:transform 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease); box-shadow:0 8px 40px rgba(0,0,0,.5); }
     .game-card:hover { transform:translateY(-5px); box-shadow:0 20px 64px rgba(0,0,0,.8),0 0 40px rgba(201,162,39,.08); border-color:rgba(201,162,39,.2); }
     .game-card.reverse { direction:rtl; }
     .game-card.reverse > * { direction:ltr; }
@@ -143,14 +110,20 @@
     .game-card:hover .game-link { gap:.7rem; color:var(--gold-bright); }
     @media (max-width:768px) { .game-card, .game-card.reverse { grid-template-columns:1fr; direction:ltr; } .game-card-visual { aspect-ratio:16/9; } }
 
-    /* SCREENSHOTS */
     .screenshots-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr)); gap:1rem; }
     .screenshot-item { border-radius:var(--r-lg); overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 20px rgba(0,0,0,.5); transition:transform 300ms var(--ease),box-shadow 300ms var(--ease); cursor:pointer; }
     .screenshot-item:hover { transform:translateY(-3px); box-shadow:0 10px 36px rgba(0,0,0,.7); }
     .screenshot-item img { width:100%; height:200px; object-fit:cover; display:block; }
     .ss-label { padding:.5rem .75rem; font-size:.72rem; color:var(--text-faint); letter-spacing:.08em; background:var(--surface); }
 
-    /* ABOUT */
+    .lb-table { max-width: 600px; }
+    .lb-row { display:flex; align-items:center; gap:1rem; padding:.75rem 1rem; border-bottom:1px solid var(--border); font-size:.95rem; }
+    .lb-row:first-child { border-top:1px solid var(--border); }
+    .lb-rank { font-family:var(--font-display); color:var(--gold); width:2rem; text-align:center; font-size:1rem; }
+    .lb-name { flex:1; color:var(--text); font-weight:600; }
+    .lb-score { color:var(--gold-bright); font-weight:700; }
+    .lb-time { color:var(--text-faint); font-size:.8rem; }
+
     .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,5rem); align-items:center; }
     @media (max-width:768px) { .about-grid { grid-template-columns:1fr; } }
     .about-text h2 { font-family:var(--font-display); font-size:clamp(1.5rem,1rem+2vw,2.5rem); font-weight:700; margin-bottom:1.25rem; color:var(--text); line-height:1.2; }
@@ -163,7 +136,6 @@
     .about-img img { width:100%; height:auto; display:block; }
     .about-img-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(7,9,13,.5), transparent 60%); }
 
-    /* FOOTER */
     .footer { padding:clamp(2.5rem,5vw,4rem) clamp(1rem,5vw,3rem); border-top:1px solid var(--border); text-align:center; }
     .footer-inner { max-width:800px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:1.2rem; }
     .footer-brand { display:flex; align-items:center; gap:.75rem; font-family:var(--font-display); font-size:1rem; color:var(--gold); letter-spacing:.1em; }
@@ -173,7 +145,6 @@
     .footer-links a:hover { color:var(--text-muted); }
     .footer-copy { font-size:.72rem; color:var(--text-faint); }
 
-    /* LIGHTBOX */
     .lightbox { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,.92); align-items:center; justify-content:center; padding:1rem; }
     .lightbox.open { display:flex; }
     .lb-img { max-width:90vw; max-height:90vh; border-radius:var(--r-lg); box-shadow:0 0 80px rgba(0,0,0,.8); }
@@ -184,7 +155,6 @@
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <!-- HEADER -->
   <header class="header">
     <a href="#" class="header-brand">
       <img src="YluosGamesProfilePicture.png" alt="Yluos Games" width="38" height="38" loading="lazy">
@@ -193,12 +163,12 @@
     <nav class="header-nav" aria-label="Main navigation">
       <a href="#games" class="hide-mobile">Games</a>
       <a href="#screenshots" class="hide-mobile">Screenshots</a>
+      <a href="#leaderboard" class="hide-mobile">Leaderboard</a>
       <a href="#about" class="hide-mobile">Studio</a>
       <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer" class="nav-cta">itch.io</a>
     </nav>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-vignette" aria-hidden="true"></div>
@@ -224,7 +194,6 @@
 
   <div class="divider"></div>
 
-  <!-- GAMES -->
   <main id="main">
   <section class="section" id="games">
     <div class="section-inner">
@@ -232,7 +201,6 @@
       <h2 class="section-heading reveal d1">Our Releases</h2>
       <div class="games-grid">
 
-        <!-- Try to Survive -->
         <a href="https://yluos-games.itch.io/trytosurvive" target="_blank" rel="noopener noreferrer" class="game-card reveal d2" aria-label="Try to Survive on itch.io">
           <div class="game-card-visual">
             <img src="Img1.jpeg" alt="Try to Survive banner" width="640" height="400" loading="lazy">
@@ -249,14 +217,12 @@
               <span class="tag">Windows</span>
               <span class="tag">Free</span>
             </div>
-            <span class="game-link">
-              Play on itch.io
+            <span class="game-link">Play on itch.io
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
         </a>
 
-        <!-- Pan That Cake -->
         <a href="https://yluos-games.itch.io/panthatcake" target="_blank" rel="noopener noreferrer" class="game-card reverse reveal d3" aria-label="Pan That Cake on itch.io">
           <div class="game-card-visual">
             <img src="BannerPanthatCake.png" alt="Pan That Cake banner" width="640" height="400" loading="lazy">
@@ -273,14 +239,12 @@
               <span class="tag">Windows</span>
               <span class="tag">Free</span>
             </div>
-            <span class="game-link">
-              Play on itch.io
+            <span class="game-link">Play on itch.io
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
         </a>
 
-        <!-- SkyBound -->
         <a href="https://yluos-games.itch.io/skybound" target="_blank" rel="noopener noreferrer" class="game-card reveal d4" aria-label="SkyBound on itch.io">
           <div class="game-card-visual">
             <img src="skyboundscreenshot1.jpeg" alt="SkyBound gameplay" width="640" height="400" loading="lazy">
@@ -297,8 +261,7 @@
               <span class="tag">Windows</span>
               <span class="tag">Free</span>
             </div>
-            <span class="game-link">
-              Play on itch.io
+            <span class="game-link">Play on itch.io
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
@@ -311,14 +274,11 @@
 
   <div class="divider"></div>
 
-  <!-- SCREENSHOTS -->
   <section class="section" id="screenshots">
     <div class="section-inner">
       <p class="eyebrow reveal">Gameplay</p>
       <h2 class="section-heading reveal d1">Screenshots</h2>
       <div class="screenshots-grid">
-
-        <!-- Try to Survive -->
         <div class="screenshot-item reveal d1" role="button" tabindex="0" aria-label="View screenshot: Try to Survive gameplay">
           <img src="Img1.jpeg" alt="Try to Survive — Gameplay" width="700" height="400" loading="lazy">
           <div class="ss-label">Try to Survive · Gameplay</div>
@@ -335,8 +295,6 @@
           <img src="Img4.jpeg" alt="Try to Survive — World" width="700" height="400" loading="lazy">
           <div class="ss-label">Try to Survive · World</div>
         </div>
-
-        <!-- Pan That Cake -->
         <div class="screenshot-item reveal d1" role="button" tabindex="0" aria-label="View screenshot: Pan That Cake diner">
           <img src="Screenshot1pancake.jpeg" alt="Pan That Cake — Diner" width="700" height="400" loading="lazy">
           <div class="ss-label">Pan That Cake · Diner</div>
@@ -345,8 +303,6 @@
           <img src="screenshot2pancake.jpeg" alt="Pan That Cake — Upgrades" width="700" height="400" loading="lazy">
           <div class="ss-label">Pan That Cake · Upgrades</div>
         </div>
-
-        <!-- SkyBound -->
         <div class="screenshot-item reveal d1" role="button" tabindex="0" aria-label="View screenshot: SkyBound gameplay">
           <img src="skyboundscreenshot1.jpeg" alt="SkyBound — Gameplay" width="700" height="400" loading="lazy">
           <div class="ss-label">SkyBound · Gameplay</div>
@@ -355,14 +311,24 @@
           <img src="screenshot2skybound.jpeg" alt="SkyBound — Ingame" width="700" height="400" loading="lazy">
           <div class="ss-label">SkyBound · Ingame</div>
         </div>
-
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ABOUT -->
+  <section class="section" id="leaderboard">
+    <div class="section-inner">
+      <p class="eyebrow reveal">SkyBound</p>
+      <h2 class="section-heading reveal d1">Top 10 Players</h2>
+      <div id="lb-table" class="lb-table reveal d2">
+        <p style="color:var(--text-muted)">Loading leaderboard...</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <section class="section" id="about">
     <div class="section-inner">
       <div class="about-grid">
@@ -375,18 +341,9 @@
             Visit on itch.io
           </a>
           <div class="stat-row">
-            <div class="stat">
-              <span class="stat-val">2025</span>
-              <span class="stat-label">Founded</span>
-            </div>
-            <div class="stat">
-              <span class="stat-val">1</span>
-              <span class="stat-label">Developer</span>
-            </div>
-            <div class="stat">
-              <span class="stat-val">3</span>
-              <span class="stat-label">Games Released</span>
-            </div>
+            <div class="stat"><span class="stat-val">2025</span><span class="stat-label">Founded</span></div>
+            <div class="stat"><span class="stat-val">1</span><span class="stat-label">Developer</span></div>
+            <div class="stat"><span class="stat-val">3</span><span class="stat-label">Games Released</span></div>
           </div>
         </div>
         <div class="about-img reveal d2">
@@ -399,7 +356,6 @@
 
   <div class="divider"></div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer" class="footer-brand">
@@ -410,13 +366,13 @@
         <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
         <a href="#games">Games</a>
         <a href="#screenshots">Screenshots</a>
+        <a href="#leaderboard">Leaderboard</a>
         <a href="#about">Studio</a>
       </nav>
       <p class="footer-copy">© 2025 Yluos Games · Solo Indie Studio · Bavaria, DE</p>
     </div>
   </footer>
 
-  <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
     <span class="lb-close" id="lb-close" role="button" tabindex="0" aria-label="Close">&times;</span>
     <img id="lb-img" class="lb-img" src="" alt="">
@@ -446,6 +402,38 @@
     lbClose.addEventListener('keydown', e => { if (e.key === 'Enter') closeLb(); });
     lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+    fetch('https://b46jo2aj.api.lootlocker.com/game/leaderboards/skybound_global/list?count=10', {
+      headers: { 'LL-Version': '2021-03-01' }
+    })
+    .then(r => r.json())
+    .then(data => {
+      const container = document.getElementById('lb-table');
+      if (!data.items || data.items.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted)">No entries yet.</p>';
+        return;
+      }
+      const medals = ['&#127942;','&#129208;','&#129209;'];
+      container.innerHTML = data.items.map((entry, i) =>
+        '<div class="lb-row">' +
+        '<span class="lb-rank">' + (i < 3 ? medals[i] : i + 1) + '</span>' +
+        '<span class="lb-name">' + (entry.player.name || 'Anonym') + '</span>' +
+        '<span class="lb-score">' + entry.score + 'm</span>' +
+        '<span class="lb-time">' + (entry.metadata ? entry.metadata + 's' : '') + '</span>' +
+        '</div>'
+      ).join('');
+    })
+    .catch(() => {
+      document.getElementById('lb-table').innerHTML =
+        '<p style="color:var(--text-muted)">Leaderboard not available.</p>';
+    });
   </script>
 </body>
-</html>
+</html>'''
+
+with open('/home/user/index.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print(f"Size: {len(html)} chars")
+print("No base64:", 'base64' not in html)
+print("No stray HTML in CSS:", '<div' not in html.split('<style>')[1].split('</style>')[0])
