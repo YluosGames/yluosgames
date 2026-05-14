@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <title>Yluos Games</title>
+  <meta name="description" content="Yluos Games — A solo indie studio crafting pixel-art worlds worth exploring. Based in Bavaria.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 80px; }
+    :root {
+      --font-display: 'Cinzel', 'Georgia', serif;
+      --font-body:    'Nunito', 'Helvetica Neue', sans-serif;
+      --gold:         #c9a227;
+      --gold-bright:  #e8bb30;
+      --gold-dim:     #a07e18;
+      --bg:           #07090d;
+      --surface:      #0d1018;
+      --surface-2:    #121722;
+      --border:       rgba(255,255,255,0.07);
+      --text:         #ece4d4;
+      --text-muted:   #8a8070;
+      --text-faint:   #42403a;
+      --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+      --r-sm: 0.375rem; --r-md: 0.5rem; --r-lg: 0.75rem;
+      --r-xl: 1rem; --r-2xl: 1.5rem; --r-full: 9999px;
+    }
+
+    /* BASE */
+    body { min-height: 100dvh; font-family: var(--font-body); font-size: clamp(1rem,.95rem + .25vw,1.125rem); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: var(--r-sm); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+    /* SKIP LINK */
+    .skip-link { position:absolute; top:-100px; left:1rem; padding:.5rem 1rem; background:var(--gold); color:#000; border-radius:var(--r-md); font-weight:700; z-index:9999; transition:top .2s; }
+    .skip-link:focus { top:1rem; }
+
+    /* HEADER */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1rem,5vw,3rem);
+      background: linear-gradient(to bottom, rgba(7,9,13,.97) 60%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,162,39,.1);
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: .75rem;
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 600;
+      color: var(--gold); letter-spacing: .06em;
+      transition: color 180ms var(--ease);
+    }
+    .header-brand:hover { color: var(--gold-bright); }
+    .header-brand img { width:38px; height:38px; border-radius:var(--r-full); border:1.5px solid rgba(201,162,39,.4); object-fit:cover; }
+    .header-nav { display:flex; gap:2rem; align-items:center; }
+    .header-nav a { font-size:.8rem; color:var(--text-muted); letter-spacing:.1em; text-transform:uppercase; transition:color 180ms var(--ease); }
+    .header-nav a:hover { color:var(--text); }
+    .nav-cta { padding:.45rem 1.1rem; border:1px solid rgba(201,162,39,.4); border-radius:var(--r-full); color:var(--gold) !important; transition:background 180ms var(--ease),border-color 180ms var(--ease) !important; }
+    .nav-cta:hover { background:rgba(201,162,39,.1); border-color:var(--gold) !important; }
+    @media (max-width:640px) { .header-nav .hide-mobile { display:none; } }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      padding: clamp(6rem,12vw,10rem) clamp(1rem,5vw,3rem) clamp(4rem,8vw,6rem);
+      overflow: hidden; text-align: center;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background-image: url('BackgroundYluosGames.PNG');
+      background-size: cover; background-position: center;
+      filter: brightness(.35) saturate(.7);
+      transform: scale(1.04);
+      transition: transform 12s ease;
+    }
+    .hero:hover .hero-bg { transform: scale(1.0); }
+    .hero-overlay { position:absolute; inset:0; background: radial-gradient(ellipse at center, transparent 30%, rgba(7,9,13,.85) 100%); }
+    .hero-vignette { position:absolute; inset:0; background: radial-gradient(ellipse at center, transparent 40%, rgba(7,9,13,.6) 100%); }
+    .hero-fade { position:absolute; bottom:0; left:0; right:0; height:200px; background: linear-gradient(to bottom, transparent, var(--bg)); }
+    .hero-content { position:relative; z-index:2; max-width:820px; }
+    .hero-logo { width:90px; height:90px; border-radius:var(--r-full); object-fit:cover; border:2px solid rgba(201,162,39,.5); margin:0 auto 2rem; box-shadow:0 0 40px rgba(201,162,39,.2); }
+    .eyebrow { font-size:.72rem; color:var(--gold); letter-spacing:.2em; text-transform:uppercase; margin-bottom:.75rem; }
+    .hero-title { font-family:var(--font-display); font-size:clamp(2.5rem,1rem+5vw,5.5rem); font-weight:900; color:var(--text); letter-spacing:.04em; line-height:1.08; margin-bottom:1.25rem; text-shadow:0 2px 30px rgba(0,0,0,.8); }
+    .hero-title span { color:var(--gold); }
+    .hero-sub { font-size:clamp(1rem,.9rem+.4vw,1.2rem); color:var(--text-muted); max-width:52ch; margin:0 auto 2.5rem; line-height:1.7; }
+    .hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+    .btn-gold { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.8rem; background:var(--gold); color:#07090d; font-family:var(--font-display); font-size:.8rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; border-radius:var(--r-full); border:none; cursor:pointer; transition:background 180ms var(--ease),transform 180ms var(--ease),box-shadow 180ms var(--ease); box-shadow:0 0 20px rgba(201,162,39,.3); }
+    .btn-gold:hover { background:var(--gold-bright); transform:translateY(-2px); box-shadow:0 4px 24px rgba(201,162,39,.5); }
+    .btn-outline { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.8rem; background:transparent; color:var(--text-muted); font-size:.8rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; border-radius:var(--r-full); border:1px solid rgba(255,255,255,.15); cursor:pointer; transition:all 180ms var(--ease); }
+    .btn-outline:hover { border-color:rgba(255,255,255,.35); color:var(--text); }
+    .scroll-hint { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.4rem; color:var(--text-faint); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; animation: bounceY 2s ease-in-out infinite; }
+    @keyframes bounceY { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* DIVIDER */
+    .divider { height:1px; background:linear-gradient(to right, transparent, rgba(201,162,39,.15), transparent); margin:0; }
+
+    /* SECTIONS */
+    .section { padding: clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem); }
+    .section-inner { max-width:1160px; margin:0 auto; }
+    .section-heading { font-family:var(--font-display); font-size:clamp(1.6rem,1.2rem+1.5vw,2.6rem); font-weight:700; color:var(--text); letter-spacing:.04em; margin-bottom:2.5rem; line-height:1.2; }
+
+    /* REVEAL ANIMATION */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s var(--ease), transform .65s var(--ease); }
+    .reveal.visible { opacity:1; transform:none; }
+    .d1 { transition-delay:.1s; } .d2 { transition-delay:.2s; } .d3 { transition-delay:.3s; } .d4 { transition-delay:.4s; }
+
+    /* GAME CARDS */
+    .games-grid { display:flex; flex-direction:column; gap:3rem; }
+    .game-card {
+      display:grid; grid-template-columns:1fr 1fr;
+      border-radius:var(--r-2xl); overflow:hidden;
+      border:1px solid var(--border);
+      background:var(--surface);
+      text-decoration:none; color:inherit;
+      transition:transform 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease);
+      box-shadow:0 8px 40px rgba(0,0,0,.5);
+    }
+    .game-card:hover { transform:translateY(-5px); box-shadow:0 20px 64px rgba(0,0,0,.8),0 0 40px rgba(201,162,39,.08); border-color:rgba(201,162,39,.2); }
+    .game-card.reverse { direction:rtl; }
+    .game-card.reverse > * { direction:ltr; }
+    .game-card-visual { position:relative; overflow:hidden; aspect-ratio:16/10; }
+    .game-card-visual img { width:100%; height:100%; object-fit:cover; transition:transform 500ms var(--ease); }
+    .game-card:hover .game-card-visual img { transform:scale(1.05); }
+    .game-card-icon { position:absolute; bottom:1rem; right:1rem; width:56px; height:56px; border-radius:var(--r-lg); object-fit:cover; border:2px solid rgba(201,162,39,.4); box-shadow:0 4px 16px rgba(0,0,0,.6); }
+    .game-card-badge { position:absolute; top:1rem; left:1rem; padding:.3rem .85rem; background:var(--gold); color:#07090d; font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; border-radius:var(--r-full); }
+    .game-card-body { padding:clamp(1.8rem,4vw,3rem); display:flex; flex-direction:column; justify-content:center; gap:1rem; }
+    .game-number { font-family:var(--font-display); font-size:.7rem; color:var(--gold-dim); letter-spacing:.2em; text-transform:uppercase; }
+    .game-title { font-family:var(--font-display); font-size:clamp(1.4rem,1.2rem+1.2vw,2.2rem); font-weight:700; color:var(--gold); letter-spacing:.06em; line-height:1.15; }
+    .game-desc { font-size:clamp(.9rem,.85rem+.2vw,1rem); color:var(--text-muted); line-height:1.75; max-width:40ch; }
+    .game-tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .tag { padding:.25rem .7rem; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:var(--r-full); font-size:.72rem; color:var(--text-faint); letter-spacing:.06em; }
+    .game-link { display:inline-flex; align-items:center; gap:.4rem; font-size:.85rem; color:var(--gold); font-weight:600; letter-spacing:.05em; margin-top:.25rem; transition:gap 200ms var(--ease),color 200ms var(--ease); }
+    .game-card:hover .game-link { gap:.7rem; color:var(--gold-bright); }
+    @media (max-width:768px) { .game-card, .game-card.reverse { grid-template-columns:1fr; direction:ltr; } .game-card-visual { aspect-ratio:16/9; } }
+
+    /* SCREENSHOTS */
+    .screenshots-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr)); gap:1rem; }
+    .screenshot-item { border-radius:var(--r-lg); overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 20px rgba(0,0,0,.5); transition:transform 300ms var(--ease),box-shadow 300ms var(--ease); cursor:pointer; }
+    .screenshot-item:hover { transform:translateY(-3px); box-shadow:0 10px 36px rgba(0,0,0,.7); }
+    .screenshot-item img { width:100%; height:200px; object-fit:cover; display:block; }
+    .ss-label { padding:.5rem .75rem; font-size:.72rem; color:var(--text-faint); letter-spacing:.08em; background:var(--surface); }
+
+    /* ABOUT */
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,5rem); align-items:center; }
+    @media (max-width:768px) { .about-grid { grid-template-columns:1fr; } }
+    .about-text h2 { font-family:var(--font-display); font-size:clamp(1.5rem,1rem+2vw,2.5rem); font-weight:700; margin-bottom:1.25rem; color:var(--text); line-height:1.2; }
+    .about-text p { color:var(--text-muted); line-height:1.8; max-width:52ch; margin-bottom:1rem; }
+    .stat-row { display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap; }
+    .stat { display:flex; flex-direction:column; gap:.25rem; }
+    .stat-val { font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--gold); }
+    .stat-label { font-size:.7rem; color:var(--text-faint); letter-spacing:.12em; text-transform:uppercase; }
+    .about-img { position:relative; border-radius:var(--r-2xl); overflow:hidden; border:1px solid var(--border); box-shadow:0 12px 40px rgba(0,0,0,.6); }
+    .about-img img { width:100%; height:auto; display:block; }
+    .about-img-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(7,9,13,.5), transparent 60%); }
+
+    /* FOOTER */
+    .footer { padding:clamp(2.5rem,5vw,4rem) clamp(1rem,5vw,3rem); border-top:1px solid var(--border); text-align:center; }
+    .footer-inner { max-width:800px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:1.2rem; }
+    .footer-brand { display:flex; align-items:center; gap:.75rem; font-family:var(--font-display); font-size:1rem; color:var(--gold); letter-spacing:.1em; }
+    .footer-brand img { width:32px; height:32px; border-radius:var(--r-full); object-fit:cover; border:1px solid rgba(201,162,39,.3); }
+    .footer-links { display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; }
+    .footer-links a { font-size:.8rem; color:var(--text-faint); letter-spacing:.08em; transition:color 180ms var(--ease); }
+    .footer-links a:hover { color:var(--text-muted); }
+    .footer-copy { font-size:.72rem; color:var(--text-faint); }
+
+    /* LIGHTBOX */
+    .lightbox { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,.92); align-items:center; justify-content:center; padding:1rem; }
+    .lightbox.open { display:flex; }
+    .lb-img { max-width:90vw; max-height:90vh; border-radius:var(--r-lg); box-shadow:0 0 80px rgba(0,0,0,.8); }
+    .lb-close { position:fixed; top:1.5rem; right:1.5rem; font-size:2rem; color:var(--text-muted); cursor:pointer; transition:color 180ms; line-height:1; }
+    .lb-close:hover { color:var(--text); }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="#" class="header-brand">
+      <img src="YluosGamesProfilePicture.png" alt="Yluos Games" width="38" height="38" loading="lazy">
+      Yluos Games
+    </a>
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="#games" class="hide-mobile">Games</a>
+      <a href="#screenshots" class="hide-mobile">Screenshots</a>
+      <a href="#about" class="hide-mobile">Studio</a>
+      <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer" class="nav-cta">itch.io</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+    <div class="hero-fade" aria-hidden="true"></div>
+    <div class="hero-content">
+      <img src="YluosGamesProfilePicture.png" alt="Yluos Games logo" class="hero-logo" width="90" height="90" loading="eager">
+      <p class="eyebrow">Indie Studio · Est. 2025</p>
+      <h1 class="hero-title">Pixel Art <span>Worlds</span><br>Worth Exploring.</h1>
+      <p class="hero-sub">Solo-developed games designed, coded and drawn from scratch — no team, no shortcuts. Just one developer and a lot of heart.</p>
+      <div class="hero-ctas">
+        <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer" class="btn-gold">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Visit on itch.io
+        </a>
+        <a href="#games" class="btn-outline">Our Games</a>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      Scroll
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- GAMES -->
+  <main id="main">
+  <section class="section" id="games">
+    <div class="section-inner">
+      <p class="eyebrow reveal">Games</p>
+      <h2 class="section-heading reveal d1">Our Releases</h2>
+      <div class="games-grid">
+
+        <!-- Try to Survive -->
+        <a href="https://yluos-games.itch.io/trytosurvive" target="_blank" rel="noopener noreferrer" class="game-card reveal d2" aria-label="Try to Survive on itch.io">
+          <div class="game-card-visual">
+            <img src="Img1.jpeg" alt="Try to Survive banner" width="640" height="400" loading="lazy">
+            <img src="IconGame.png" alt="Try to Survive icon" class="game-card-icon" width="56" height="56" loading="lazy">
+            <span class="game-card-badge">Available Now</span>
+          </div>
+          <div class="game-card-body">
+            <span class="game-number">Game 01</span>
+            <h3 class="game-title">Try to Survive</h3>
+            <p class="game-desc">Face endless waves of enemies in a medieval pixel-art world. Unlock upgrades, abilities and new looks — and see how long you can last.</p>
+            <div class="game-tags">
+              <span class="tag">Horde Survival</span>
+              <span class="tag">Pixel Art</span>
+              <span class="tag">Windows</span>
+              <span class="tag">Free</span>
+            </div>
+            <span class="game-link">
+              Play on itch.io
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Pan That Cake -->
+        <a href="https://yluos-games.itch.io/panthatcake" target="_blank" rel="noopener noreferrer" class="game-card reverse reveal d3" aria-label="Pan That Cake on itch.io">
+          <div class="game-card-visual">
+            <img src="BannerPanthatCake.png" alt="Pan That Cake banner" width="640" height="400" loading="lazy">
+            <img src="IconPanThatCake.png" alt="Pan That Cake icon" class="game-card-icon" width="56" height="56" loading="lazy">
+            <span class="game-card-badge">Available Now</span>
+          </div>
+          <div class="game-card-body">
+            <span class="game-number">Game 02</span>
+            <h3 class="game-title">Pan That Cake</h3>
+            <p class="game-desc">Cook, stack and serve pancakes in your own cozy diner. Keep your guests happy, upgrade your kitchen and set the mood with the jukebox.</p>
+            <div class="game-tags">
+              <span class="tag">Cozy Sim</span>
+              <span class="tag">Pixel Art</span>
+              <span class="tag">Windows</span>
+              <span class="tag">Free</span>
+            </div>
+            <span class="game-link">
+              Play on itch.io
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- SkyBound -->
+        <a href="https://yluos-games.itch.io/skybound" target="_blank" rel="noopener noreferrer" class="game-card reveal d4" aria-label="SkyBound on itch.io">
+          <div class="game-card-visual">
+            <img src="skyboundscreenshot1.jpg" alt="SkyBound gameplay" width="640" height="400" loading="lazy">
+            <img src="IconSkyBound-New-2.jpg" alt="SkyBound icon" class="game-card-icon" width="56" height="56" loading="lazy">
+            <span class="game-card-badge">Available Now</span>
+          </div>
+          <div class="game-card-body">
+            <span class="game-number">Game 03</span>
+            <h3 class="game-title">SkyBound</h3>
+            <p class="game-desc">Jump from platform to platform as a squirrel and fly as high as possible — before the danger catches up with you. How far can you go?</p>
+            <div class="game-tags">
+              <span class="tag">Endless Jumper</span>
+              <span class="tag">Pixel Art</span>
+              <span class="tag">Windows</span>
+              <span class="tag">Free</span>
+            </div>
+            <span class="game-link">
+              Play on itch.io
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <div class="divider"></div>
+
+  <!-- SCREENSHOTS -->
+  <section class="section" id="screenshots">
+    <div class="section-inner">
+      <p class="eyebrow reveal">Gameplay</p>
+      <h2 class="section-heading reveal d1">Screenshots</h2>
+      <div class="screenshots-grid">
+
+        <!-- Try to Survive -->
+        <div class="screenshot-item reveal d1" role="button" tabindex="0" aria-label="View screenshot: Try to Survive gameplay">
+          <img src="Img1.jpeg" alt="Try to Survive — Gameplay" width="700" height="400" loading="lazy">
+          <div class="ss-label">Try to Survive · Gameplay</div>
+        </div>
+        <div class="screenshot-item reveal d2" role="button" tabindex="0" aria-label="View screenshot: Try to Survive upgrades">
+          <img src="Img2.jpeg" alt="Try to Survive — Upgrades" width="700" height="400" loading="lazy">
+          <div class="ss-label">Try to Survive · Upgrades</div>
+        </div>
+        <div class="screenshot-item reveal d3" role="button" tabindex="0" aria-label="View screenshot: Try to Survive combat">
+          <img src="Img3.jpeg" alt="Try to Survive — Combat" width="700" height="400" loading="lazy">
+          <div class="ss-label">Try to Survive · Combat</div>
+        </div>
+        <div class="screenshot-item reveal d4" role="button" tabindex="0" aria-label="View screenshot: Try to Survive world">
+          <img src="Img4.jpeg" alt="Try to Survive — World" width="700" height="400" loading="lazy">
+          <div class="ss-label">Try to Survive · World</div>
+        </div>
+
+        <!-- Pan That Cake -->
+        <div class="screenshot-item reveal d1" role="button" tabindex="0" aria-label="View screenshot: Pan That Cake diner">
+          <img src="Screenshot1pancake.jpeg" alt="Pan That Cake — Diner" width="700" height="400" loading="lazy">
+          <div class="ss-label">Pan That Cake · Diner</div>
+        </div>
+        <div class="screenshot-item reveal d2" role="button" tabindex="0" aria-label="View screenshot: Pan That Cake upgrades">
+          <img src="screenshot2pancake.jpeg" alt="Pan That Cake — Upgrades" width="700" height="400" loading="lazy">
+          <div class="ss-label">Pan That Cake · Upgrades</div>
+        </div>
+
+        <!-- SkyBound -->
+        <div class="screenshot-item reveal d1" role="button" tabindex="0" aria-label="View screenshot: SkyBound gameplay">
+          <img src="skyboundscreenshot1.jpg" alt="SkyBound — Gameplay" width="700" height="400" loading="lazy">
+          <div class="ss-label">SkyBound · Gameplay</div>
+        </div>
+        <div class="screenshot-item reveal d2" role="button" tabindex="0" aria-label="View screenshot: SkyBound ingame">
+          <img src="screenshot2skybound.jpg" alt="SkyBound — Ingame" width="700" height="400" loading="lazy">
+          <div class="ss-label">SkyBound · Ingame</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text reveal d1">
+          <h2>Made by one person,<br>with a lot of heart.</h2>
+          <p>Yluos Games is a solo indie studio based in Bavaria. Every game is designed, coded and drawn from scratch — no team, no shortcuts.</p>
+          <p>The goal is simple: create small games that are easy to pick up, hard to put down, and satisfying to master.</p>
+          <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer" class="btn-gold" style="margin-top:1.5rem; width:fit-content;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            Visit on itch.io
+          </a>
+          <div class="stat-row">
+            <div class="stat">
+              <span class="stat-val">2025</span>
+              <span class="stat-label">Founded</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">1</span>
+              <span class="stat-label">Developer</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">3</span>
+              <span class="stat-label">Games Released</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-img reveal d2">
+          <img src="BannerYluosGames.PNG" alt="Yluos Games banner" width="600" height="300" loading="lazy">
+          <div class="about-img-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer" class="footer-brand">
+        <img src="YluosGamesProfilePicture.png" alt="Yluos Games" width="32" height="32" loading="lazy">
+        Yluos Games
+      </a>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="https://yluos-games.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
+        <a href="#games">Games</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#about">Studio</a>
+      </nav>
+      <p class="footer-copy">© 2025 Yluos Games · Solo Indie Studio · Bavaria, DE</p>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+    <span class="lb-close" id="lb-close" role="button" tabindex="0" aria-label="Close">&times;</span>
+    <img id="lb-img" class="lb-img" src="" alt="">
+  </div>
+
+  <script defer>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    }), { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbClose = document.getElementById('lb-close');
+    document.querySelectorAll('.screenshot-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lbImg.src = item.querySelector('img').src;
+        lbImg.alt = item.querySelector('img').alt;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+      item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') item.click(); });
+    });
+    function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; lbImg.src = ''; }
+    lbClose.addEventListener('click', closeLb);
+    lbClose.addEventListener('keydown', e => { if (e.key === 'Enter') closeLb(); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+  </script>
+</body>
+</html>
