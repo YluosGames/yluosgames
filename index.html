@@ -404,9 +404,12 @@ html = r'''<!DOCTYPE html>
     lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
-    fetch('https://b46jo2aj.api.lootlocker.com/game/leaderboards/skybound_global/list?count=10', {
-      headers: { 'LL-Version': '2021-03-01' }
-    })
+  fetch('https://b46jo2aj.api.lootlocker.com/game/v1/leaderboards/skybound_global/list?count=10', {
+    headers: {
+      'LL-Version': '2021-03-01',
+      'x-api-key': 'dev_0128cfb5db9746a898d5d8268115262b'   // ← Game API Key aus LootLocker Dashboard
+    }
+  })
     .then(r => r.json())
     .then(data => {
       const container = document.getElementById('lb-table');
