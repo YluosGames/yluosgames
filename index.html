@@ -416,9 +416,9 @@ html = r'''<!DOCTYPE html>
         container.innerHTML = data.items.map((entry, i) =>
           '<div class="lb-row">' +
           '<span class="lb-rank">' + (i < 3 ? medals[i] : i + 1) + '</span>' +
-          '<span class="lb-name">' + (entry.player.name || 'Anonym') + '</span>' +
+          '<span class="lb-name">' + (entry.metadata ? entry.metadata.split('|')[0] : 'Anonym') + '</span>' +
           '<span class="lb-score">' + entry.score + 'm</span>' +
-          '<span class="lb-time">' + (entry.metadata ? entry.metadata + 's' : '') + '</span>' +
+          '<span class="lb-time">' + (entry.metadata && entry.metadata.includes('|') ? entry.metadata.split('|')[1] + 's' : '') + '</span>' +
           '</div>'
         ).join('');
       })
