@@ -1,0 +1,37 @@
+name: Update Leaderboard
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch leaderboard
+        run: |
+          curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -H "LL-Version: 2021-03-01" \
+            -d "{\"game_api_key\":\"${{ secrets.LOOTLOCKER_API_KEY }}\",\"platform\":\"guest\",\"player_identifier\":\"web_reader\",\"game_version\":\"1.0.0.0\"}" \
+            https://b46jo2aj.api.lootlocker.com/game/v2/session/guest > session.json
+
+          TOKEN=$(python3 -c "import sys,json; d=json.load(open('session.json')); print(d.get('session_token',''))")
+
+          curl -s \
+            -H "x-session-token: $TOKEN" \
+            -H "LL-Version: 2021-03-01" \
+            "https://b46jo2aj.api.lootlocker.com/game/leaderboards/skybound_global/list?count=10" \
+            > leaderboard.json
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add leaderboard.json
+          git diff --staged --quiet || git commit -m "Update leaderboard"
+          git push
