@@ -404,7 +404,7 @@ html = r'''<!DOCTYPE html>
     lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
-    fetch('https://raw.githubusercontent.com/YluosGames/yluosgames/main/leaderboard.json')
+    fetch('https://raw.githubusercontent.com/YluosGames/yluosgames/main/leaderboard.json?t=' + Date.now())
       .then(r => r.json())
       .then(data => {
         const container = document.getElementById('lb-table');
@@ -437,4 +437,4 @@ with open('output/index.html', 'w', encoding='utf-8') as f:
 
 print(f"Size: {len(html)} chars")
 print("No duplicate .then:", html.count('.then(r => r.json())') == 1)
-print("Script block clean:", html.count('fetch(') == 1)
+print("Script block clean:", html.count('(') == 1)
