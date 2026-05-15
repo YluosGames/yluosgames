@@ -436,7 +436,7 @@ fetch('./leaderboard.json')
         container.innerHTML = '<p style="color:var(--text-muted)">No entries yet.</p>';
         return;
       }
-      const medals = ['&#127942;','&#129208;','&#129209;'];
+      const medals = ['1.', '2.', '3.'];
       container.innerHTML = data.items.map((entry, i) =>
         '<div class="lb-row">' +
         '<span class="lb-rank">' + (i < 3 ? medals[i] : i + 1) + '</span>' +
