@@ -370,7 +370,7 @@ html = r'''<!DOCTYPE html>
         <a href="#leaderboard">Leaderboard</a>
         <a href="#about">Studio</a>
       </nav>
-      <p class="footer-copy">© 2025 Yluos Games · Solo Indie Studio · Bavaria, DE</p>
+      <p class="footer-copy">&copy; 2025 Yluos Games &middot; Solo Indie Studio &middot; Bavaria, DE</p>
     </div>
   </footer>
 
@@ -404,56 +404,37 @@ html = r'''<!DOCTYPE html>
     lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
-fetch('https://raw.githubusercontent.com/YluosGames/yluosgames/main/leaderboard.json')
-  .then(r => r.json())
-  .then(data => {
-    const container = document.getElementById('lb-table');
-    if (!data.items || data.items.length === 0) {
-      container.innerHTML = '<p style="color:var(--text-muted)">No entries yet.</p>';
-      return;
-    }
-    const medals = ['1.', '2.', '3.'];
-    container.innerHTML = data.items.map((entry, i) =>
-      '<div class="lb-row">' +
-      '<span class="lb-rank">' + (i < 3 ? medals[i] : i + 1) + '</span>' +
-      '<span class="lb-name">' + (entry.player.name || 'Anonym') + '</span>' +
-      '<span class="lb-score">' + entry.score + 'm</span>' +
-      '<span class="lb-time">' + (entry.metadata ? entry.metadata + 's' : '') + '</span>' +
-      '</div>'
-    ).join('');
-  })
-  .catch(() => {
-    document.getElementById('lb-table').innerHTML =
-      '<p style="color:var(--text-muted)">Leaderboard not available.</p>';
-  });
-    .then(r => r.json())
-    .then(data => {
-      const container = document.getElementById('lb-table');
-      if (!data.items || data.items.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-muted)">No entries yet.</p>';
-        return;
-      }
-      const medals = ['1.', '2.', '3.'];
-      container.innerHTML = data.items.map((entry, i) =>
-        '<div class="lb-row">' +
-        '<span class="lb-rank">' + (i < 3 ? medals[i] : i + 1) + '</span>' +
-        '<span class="lb-name">' + (entry.player.name || 'Anonym') + '</span>' +
-        '<span class="lb-score">' + entry.score + 'm</span>' +
-        '<span class="lb-time">' + (entry.metadata ? entry.metadata + 's' : '') + '</span>' +
-        '</div>'
-      ).join('');
-    })
-    .catch(() => {
-      document.getElementById('lb-table').innerHTML =
-        '<p style="color:var(--text-muted)">Leaderboard not available.</p>';
-    });
+    fetch('https://raw.githubusercontent.com/YluosGames/yluosgames/main/leaderboard.json')
+      .then(r => r.json())
+      .then(data => {
+        const container = document.getElementById('lb-table');
+        if (!data.items || data.items.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-muted)">No entries yet.</p>';
+          return;
+        }
+        const medals = ['1.', '2.', '3.'];
+        container.innerHTML = data.items.map((entry, i) =>
+          '<div class="lb-row">' +
+          '<span class="lb-rank">' + (i < 3 ? medals[i] : i + 1) + '</span>' +
+          '<span class="lb-name">' + (entry.player.name || 'Anonym') + '</span>' +
+          '<span class="lb-score">' + entry.score + 'm</span>' +
+          '<span class="lb-time">' + (entry.metadata ? entry.metadata + 's' : '') + '</span>' +
+          '</div>'
+        ).join('');
+      })
+      .catch(() => {
+        document.getElementById('lb-table').innerHTML =
+          '<p style="color:var(--text-muted)">Leaderboard not available.</p>';
+      });
   </script>
 </body>
 </html>'''
 
-with open('/home/user/index.html', 'w', encoding='utf-8') as f:
+import os
+os.makedirs('output', exist_ok=True)
+with open('output/index.html', 'w', encoding='utf-8') as f:
     f.write(html)
 
 print(f"Size: {len(html)} chars")
-print("No base64:", 'base64' not in html)
-print("No stray HTML in CSS:", '<div' not in html.split('<style>')[1].split('</style>')[0])
+print("No duplicate .then:", html.count('.then(r => r.json())') == 1)
+print("Script block clean:", html.count('fetch(') == 1)
